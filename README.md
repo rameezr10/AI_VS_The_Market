@@ -51,7 +51,7 @@ The `data_collection.py` script builds a rich feature set for each ticker:
 - **Price Data**: 1-minute OHLCV bars from Polygon.io (market hours only)
 - **Technical Indicators**: SMA(10, 50), EMA(10, 50), MACD, RSI(14)
 - **Rolling Features**: 20-bar rolling high/low, 1-minute returns
-- **Kalman Filter**: A strictly **causal** (forward-pass only) Kalman filter — no data leakage
+- **Kalman Filter**: A **causal** (forward-pass only) Kalman filter
 - **News Sentiment**: Backward-merged Polygon.io news articles with sentiment labels and staleness tracking
 
 ---
@@ -113,18 +113,8 @@ Navigate to `http://localhost:5000` to access the interactive dashboard for data
 
 ```
 MSFT, COST, HD, JNJ, JPM, LLY, MA, META, PG, UNH, V, WMT, XOM
+
 ```
-
----
-
-## 📌 Key Design Decision: Causal Kalman Filter
-
-An earlier version of this project used `pykalman`'s `.smooth()` method, which performs a **backward pass** over the entire dataset — effectively leaking future information into each data point. This was identified and corrected:
-
-- ❌ **Before**: `kf.em()` + `kf.smooth()` → data leakage
-- ✅ **After**: Manual recursive 1D Kalman filter (predict → update loop) → strictly causal
-
----
 
 ## 📄 License
 
