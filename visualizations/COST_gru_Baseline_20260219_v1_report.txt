@@ -1,0 +1,9 @@
+--- GRU Baseline Performance for COST ---
+              precision    recall  f1-score   support
+
+        Down       0.51      1.00      0.67      4733
+          Up       0.50      0.00      0.00      4616
+
+    accuracy                           0.51      9349
+   macro avg       0.50      0.50      0.34      9349
+weighted avg       0.50      0.51      0.34      9349

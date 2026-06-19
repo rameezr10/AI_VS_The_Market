@@ -1,0 +1,11 @@
+--- CAPSNET-LSTM BASELINE STATISTICAL PERFORMANCE for COST ---
+Test Accuracy: 50.68%
+
+              precision    recall  f1-score   support
+
+   Down/Flat       0.51      0.98      0.67      4745
+          Up       0.51      0.02      0.03      4623
+
+    accuracy                           0.51      9368
+   macro avg       0.51      0.50      0.35      9368
+weighted avg       0.51      0.51      0.36      9368

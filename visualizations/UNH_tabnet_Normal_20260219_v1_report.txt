@@ -1,0 +1,9 @@
+--- TabNet Performance for UNH ---
+              precision    recall  f1-score   support
+
+        Down       0.60      1.00      0.75      5530
+          Up       0.00      0.00      0.00      3731
+
+    accuracy                           0.60      9261
+   macro avg       0.30      0.50      0.37      9261
+weighted avg       0.36      0.60      0.45      9261

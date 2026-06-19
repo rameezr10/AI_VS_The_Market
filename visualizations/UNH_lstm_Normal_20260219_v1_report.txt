@@ -1,0 +1,9 @@
+--- Final Statistical Performance for UNH (10% Test Set) ---
+              precision    recall  f1-score   support
+
+        Down       0.51      0.94      0.66      4678
+          Up       0.54      0.07      0.13      4561
+
+    accuracy                           0.51      9239
+   macro avg       0.52      0.51      0.40      9239
+weighted avg       0.52      0.51      0.40      9239

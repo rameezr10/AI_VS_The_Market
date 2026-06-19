@@ -1,0 +1,11 @@
+--- CAPSNET-LSTM BASELINE STATISTICAL PERFORMANCE for WMT ---
+Test Accuracy: 51.64%
+
+              precision    recall  f1-score   support
+
+   Down/Flat       0.52      1.00      0.68      5033
+          Up       0.40      0.00      0.00      4709
+
+    accuracy                           0.52      9742
+   macro avg       0.46      0.50      0.34      9742
+weighted avg       0.46      0.52      0.35      9742

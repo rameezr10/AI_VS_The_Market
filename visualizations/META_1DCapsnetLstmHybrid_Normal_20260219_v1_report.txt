@@ -1,0 +1,9 @@
+--- Final Statistical Performance for META (Test Set) ---
+              precision    recall  f1-score   support
+
+        Down       0.64      0.72      0.67      4532
+          Up       0.66      0.58      0.62      4394
+
+    accuracy                           0.65      8926
+   macro avg       0.65      0.65      0.65      8926
+weighted avg       0.65      0.65      0.65      8926

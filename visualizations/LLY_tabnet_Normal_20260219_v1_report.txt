@@ -1,0 +1,9 @@
+--- TabNet Performance for LLY ---
+              precision    recall  f1-score   support
+
+        Down       0.57      0.92      0.70      5347
+          Up       0.59      0.15      0.23      4373
+
+    accuracy                           0.57      9720
+   macro avg       0.58      0.53      0.47      9720
+weighted avg       0.58      0.57      0.49      9720

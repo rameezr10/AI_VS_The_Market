@@ -1,0 +1,11 @@
+--- CAPSNET-LSTM BASELINE STATISTICAL PERFORMANCE for META ---
+Test Accuracy: 50.12%
+
+              precision    recall  f1-score   support
+
+   Down/Flat       0.52      0.26      0.35      4531
+          Up       0.50      0.75      0.60      4394
+
+    accuracy                           0.50      8925
+   macro avg       0.51      0.50      0.47      8925
+weighted avg       0.51      0.50      0.47      8925

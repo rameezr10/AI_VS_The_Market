@@ -1,0 +1,9 @@
+--- TabNet Performance for JNJ ---
+              precision    recall  f1-score   support
+
+        Down       0.60      0.99      0.75      5876
+          Up       0.57      0.01      0.02      3885
+
+    accuracy                           0.60      9761
+   macro avg       0.59      0.50      0.39      9761
+weighted avg       0.59      0.60      0.46      9761

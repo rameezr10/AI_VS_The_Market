@@ -1,0 +1,11 @@
+--- Final Statistical Performance for META (10% Test Set) ---
+Test Accuracy: 49.52%
+
+               precision    recall  f1-score   support
+
+Down/Flat (0)       0.51      0.12      0.20      4500
+       Up (1)       0.49      0.88      0.63      4365
+
+     accuracy                           0.50      8865
+    macro avg       0.50      0.50      0.41      8865
+ weighted avg       0.50      0.50      0.41      8865

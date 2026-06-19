@@ -1,0 +1,9 @@
+--- Final Statistical Performance for PG (10% Test Set) ---
+              precision    recall  f1-score   support
+
+        Down       0.89      0.89      0.89      5018
+          Up       0.88      0.87      0.88      4596
+
+    accuracy                           0.88      9614
+   macro avg       0.88      0.88      0.88      9614
+weighted avg       0.88      0.88      0.88      9614

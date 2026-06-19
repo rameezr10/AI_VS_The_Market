@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block header_title %}Raw Dataset Viewer{% endblock %}
+
+{% block content %}
+<div class="h-full flex flex-col relative">
+    <div class="mb-4 flex justify-between items-center">
+        <p class="text-gray-400 text-sm">
+            Full historical and engineered dataset. Uses infinite scrolling to prevent browser crashes.
+        </p>
+        <div class="text-xs text-tealHighlight bg-tealHighlight/10 px-3 py-1 rounded-full border border-tealHighlight/30" id="row-counter">
+            Loaded: 0 rows
+        </div>
+    </div>
+
+    <!-- Table Container with fixed height for scrolling -->
+    <div id="table-container" class="flex-1 bg-cardBg border border-borderGrey rounded-lg overflow-y-auto relative">
+        <table class="w-full text-left border-collapse text-xs font-mono whitespace-nowrap">
+            <thead class="sticky top-0 bg-darkBg border-b border-borderGrey shadow-sm z-10" id="table-head">
+                <!-- Headers injected via JS -->
+            </thead>
+            <tbody class="divide-y divide-borderGrey/50" id="table-body">
+                <!-- Rows injected via JS -->
+            </tbody>
+        </table>
+        
+        <!-- Loading Indicator -->
+        <div id="scroll-loader" class="py-4 flex justify-center hidden">
+            <svg class="animate-spin h-5 w-5 text-tealHighlight" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const tickerSelect = document.getElementById('ticker-select');
+    const tableContainer = document.getElementById('table-container');
+    const tableHead = document.getElementById('table-head');
+    const tableBody = document.getElementById('table-body');
+    const scrollLoader = document.getElementById('scroll-loader');
+    const rowCounter = document.getElementById('row-counter');
+
+    let currentStart = 0;
+    const limit = 100;
+    let isFetching = false;
+    let totalRows = Infinity;
+    let columnsRendered = false;
+
+    async function fetchDatasetChunk() {
+        if (isFetching || currentStart >= totalRows) return;
+        
+        isFetching = true;
+        scrollLoader.classList.remove('hidden');
+        
+        const symbol = tickerSelect.value;
+        try {
+            const response = await fetch(`/api/dataset/${symbol}?start=${currentStart}&limit=${limit}`);
+            const data = await response.json();
+            
+            if (data.error) {
+                console.error(data.error);
+                tableBody.innerHTML = `<tr><td class="p-4 text-red-500">${data.error}</td></tr>`;
+                isFetching = false;
+                scrollLoader.classList.add('hidden');
+                return;
+            }
+
+            totalRows = data.total;
+
+            // Render headers if first chunk
+            if (!columnsRendered && data.columns) {
+                const tr = document.createElement('tr');
+                data.columns.forEach(col => {
+                    const th = document.createElement('th');
+                    th.className = 'px-4 py-3 font-semibold text-gray-300';
+                    th.textContent = col;
+                    tr.appendChild(th);
+                });
+                tableHead.innerHTML = '';
+                tableHead.appendChild(tr);
+                columnsRendered = true;
+            }
+
+            // Render rows
+            if (data.data && data.data.length > 0) {
+                data.data.forEach(rowObj => {
+                    const tr = document.createElement('tr');
+                    tr.className = 'hover:bg-white/5 transition-colors';
+                    
+                    data.columns.forEach(col => {
+                        const td = document.createElement('td');
+                        td.className = 'px-4 py-2 text-gray-400';
+                        // Format numbers slightly if possible, otherwise raw string
+                        let val = rowObj[col];
+                        if (typeof val === 'number') {
+                            val = Number.isInteger(val) ? val : val.toFixed(4);
+                        }
+                        td.textContent = val;
+                        tr.appendChild(td);
+                    });
+                    tableBody.appendChild(tr);
+                });
+                
+                currentStart += data.data.length;
+                rowCounter.textContent = `Loaded: ${currentStart} / ${totalRows} rows`;
+            }
+
+        } catch (error) {
+            console.error('Failed to fetch chunk', error);
+        } finally {
+            isFetching = false;
+            scrollLoader.classList.add('hidden');
+        }
+    }
+
+    function resetAndFetch() {
+        // Reset state
+        currentStart = 0;
+        totalRows = Infinity;
+        columnsRendered = false;
+        tableHead.innerHTML = '';
+        tableBody.innerHTML = '';
+        rowCounter.textContent = 'Loaded: 0 rows';
+        
+        fetchDatasetChunk();
+    }
+
+    // Scroll listener for Infinite Scroll
+    tableContainer.addEventListener('scroll', () => {
+        // If we scroll within 200px of the bottom, fetch next chunk
+        if (tableContainer.scrollTop + tableContainer.clientHeight >= tableContainer.scrollHeight - 200) {
+            fetchDatasetChunk();
+        }
+    });
+
+    // When ticker changes, reset and fetch new dataset
+    tickerSelect.addEventListener('change', resetAndFetch);
+
+    // Initial load
+    document.addEventListener('DOMContentLoaded', resetAndFetch);
+</script>
+{% endblock %}

@@ -1,0 +1,11 @@
+--- TabNet Baseline Performance for MA ---
+Test Accuracy: 51.47%
+
+               precision    recall  f1-score   support
+
+Down/Flat (0)       0.52      0.95      0.67      4980
+       Up (1)       0.48      0.05      0.09      4667
+
+     accuracy                           0.51      9647
+    macro avg       0.50      0.50      0.38      9647
+ weighted avg       0.50      0.51      0.39      9647

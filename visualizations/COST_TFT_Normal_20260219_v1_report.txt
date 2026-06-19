@@ -1,0 +1,9 @@
+--- Final Statistical Performance for COST (10% Test Set) ---
+              precision    recall  f1-score   support
+
+        Down       0.78      0.75      0.77      4666
+          Up       0.76      0.79      0.78      4641
+
+    accuracy                           0.77      9307
+   macro avg       0.77      0.77      0.77      9307
+weighted avg       0.77      0.77      0.77      9307

@@ -1,0 +1,9 @@
+--- Final Statistical Performance for WMT (10% Test Set) ---
+              precision    recall  f1-score   support
+
+        Down       0.89      0.88      0.89      4998
+          Up       0.88      0.88      0.88      4682
+
+    accuracy                           0.88      9680
+   macro avg       0.88      0.88      0.88      9680
+weighted avg       0.88      0.88      0.88      9680

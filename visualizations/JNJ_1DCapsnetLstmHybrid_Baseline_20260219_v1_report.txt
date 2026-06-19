@@ -1,0 +1,11 @@
+--- CAPSNET-LSTM BASELINE STATISTICAL PERFORMANCE for JNJ ---
+Test Accuracy: 50.93%
+
+              precision    recall  f1-score   support
+
+   Down/Flat       0.51      1.00      0.67      4967
+          Up       0.57      0.00      0.00      4792
+
+    accuracy                           0.51      9759
+   macro avg       0.54      0.50      0.34      9759
+weighted avg       0.54      0.51      0.35      9759

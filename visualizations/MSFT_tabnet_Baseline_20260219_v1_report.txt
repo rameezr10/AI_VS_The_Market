@@ -1,0 +1,11 @@
+--- TabNet Baseline Performance for MSFT ---
+Test Accuracy: 49.97%
+
+               precision    recall  f1-score   support
+
+Down/Flat (0)       0.50      0.78      0.61      4573
+       Up (1)       0.49      0.21      0.30      4513
+
+     accuracy                           0.50      9086
+    macro avg       0.50      0.50      0.45      9086
+ weighted avg       0.50      0.50      0.46      9086

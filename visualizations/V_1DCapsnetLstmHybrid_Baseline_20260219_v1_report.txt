@@ -1,0 +1,11 @@
+--- CAPSNET-LSTM BASELINE STATISTICAL PERFORMANCE for V ---
+Test Accuracy: 51.05%
+
+              precision    recall  f1-score   support
+
+   Down/Flat       0.51      0.98      0.67      4998
+          Up       0.50      0.02      0.03      4791
+
+    accuracy                           0.51      9789
+   macro avg       0.50      0.50      0.35      9789
+weighted avg       0.50      0.51      0.36      9789

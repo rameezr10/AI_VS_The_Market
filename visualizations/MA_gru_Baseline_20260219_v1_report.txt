@@ -1,0 +1,9 @@
+--- GRU Baseline Performance for MA ---
+              precision    recall  f1-score   support
+
+        Down       0.52      0.97      0.67      4964
+          Up       0.48      0.03      0.06      4663
+
+    accuracy                           0.51      9627
+   macro avg       0.50      0.50      0.36      9627
+weighted avg       0.50      0.51      0.37      9627

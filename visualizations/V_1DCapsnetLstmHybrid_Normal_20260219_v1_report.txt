@@ -1,0 +1,9 @@
+--- Final Statistical Performance for V (Test Set) ---
+              precision    recall  f1-score   support
+
+        Down       0.60      0.74      0.66      4999
+          Up       0.64      0.48      0.55      4791
+
+    accuracy                           0.61      9790
+   macro avg       0.62      0.61      0.60      9790
+weighted avg       0.61      0.61      0.60      9790

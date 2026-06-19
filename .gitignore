@@ -1,0 +1,39 @@
+# ==============================
+# Large Data & Model Files
+# ==============================
+data/
+saved_models/
+lightning_logs/
+
+# ==============================
+# Python Artifacts
+# ==============================
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ==============================
+# Jupyter Notebook Checkpoints
+# ==============================
+.ipynb_checkpoints/
+
+# ==============================
+# OS & Editor Files
+# ==============================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# ==============================
+# Misc
+# ==============================
+kalman_dump.txt
+merged.csv

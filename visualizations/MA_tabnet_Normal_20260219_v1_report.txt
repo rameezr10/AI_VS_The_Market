@@ -1,0 +1,9 @@
+--- TabNet Performance for MA ---
+              precision    recall  f1-score   support
+
+        Down       0.58      0.95      0.72      5568
+          Up       0.53      0.08      0.13      4079
+
+    accuracy                           0.58      9647
+   macro avg       0.56      0.51      0.43      9647
+weighted avg       0.56      0.58      0.47      9647

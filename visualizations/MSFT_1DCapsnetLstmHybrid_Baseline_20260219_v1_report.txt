@@ -1,0 +1,11 @@
+--- CAPSNET-LSTM BASELINE STATISTICAL PERFORMANCE for MSFT ---
+Test Accuracy: 49.79%
+
+              precision    recall  f1-score   support
+
+   Down/Flat       0.50      0.26      0.34      4572
+          Up       0.50      0.74      0.59      4513
+
+    accuracy                           0.50      9085
+   macro avg       0.50      0.50      0.47      9085
+weighted avg       0.50      0.50      0.47      9085

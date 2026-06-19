@@ -1,0 +1,9 @@
+--- Final Statistical Performance for XOM (10% Test Set) ---
+              precision    recall  f1-score   support
+
+        Down       0.59      0.63      0.61      4992
+          Up       0.58      0.54      0.56      4775
+
+    accuracy                           0.59      9767
+   macro avg       0.59      0.58      0.58      9767
+weighted avg       0.59      0.59      0.58      9767

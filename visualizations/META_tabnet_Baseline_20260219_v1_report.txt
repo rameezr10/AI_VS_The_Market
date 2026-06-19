@@ -1,0 +1,11 @@
+--- TabNet Baseline Performance for META ---
+Test Accuracy: 50.66%
+
+               precision    recall  f1-score   support
+
+Down/Flat (0)       0.51      0.50      0.51      4532
+       Up (1)       0.50      0.51      0.51      4394
+
+     accuracy                           0.51      8926
+    macro avg       0.51      0.51      0.51      8926
+ weighted avg       0.51      0.51      0.51      8926

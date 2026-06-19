@@ -1,0 +1,9 @@
+--- Final Statistical Performance for MSFT (10% Test Set) ---
+              precision    recall  f1-score   support
+
+        Down       0.81      0.83      0.82      4570
+          Up       0.82      0.81      0.81      4453
+
+    accuracy                           0.82      9023
+   macro avg       0.82      0.82      0.82      9023
+weighted avg       0.82      0.82      0.82      9023

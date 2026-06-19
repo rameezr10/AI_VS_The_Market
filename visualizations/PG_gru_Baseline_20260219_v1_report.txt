@@ -1,0 +1,9 @@
+--- GRU Baseline Performance for PG ---
+              precision    recall  f1-score   support
+
+        Down       0.52      1.00      0.69      5056
+          Up       0.00      0.00      0.00      4601
+
+    accuracy                           0.52      9657
+   macro avg       0.26      0.50      0.34      9657
+weighted avg       0.27      0.52      0.36      9657

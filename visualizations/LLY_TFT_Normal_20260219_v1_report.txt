@@ -1,0 +1,9 @@
+--- Final Statistical Performance for LLY (10% Test Set) ---
+              precision    recall  f1-score   support
+
+        Down       0.79      0.77      0.78      4961
+          Up       0.76      0.78      0.77      4696
+
+    accuracy                           0.77      9657
+   macro avg       0.77      0.77      0.77      9657
+weighted avg       0.77      0.77      0.77      9657

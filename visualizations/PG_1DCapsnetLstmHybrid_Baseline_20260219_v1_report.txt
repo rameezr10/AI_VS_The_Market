@@ -1,0 +1,11 @@
+--- CAPSNET-LSTM BASELINE STATISTICAL PERFORMANCE for PG ---
+Test Accuracy: 52.23%
+
+              precision    recall  f1-score   support
+
+   Down/Flat       0.52      0.98      0.68      5065
+          Up       0.47      0.02      0.03      4611
+
+    accuracy                           0.52      9676
+   macro avg       0.50      0.50      0.36      9676
+weighted avg       0.50      0.52      0.37      9676

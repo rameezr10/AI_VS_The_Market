@@ -1,0 +1,9 @@
+--- TabNet Performance for COST ---
+              precision    recall  f1-score   support
+
+        Down       0.60      0.84      0.70      5250
+          Up       0.57      0.28      0.37      4119
+
+    accuracy                           0.59      9369
+   macro avg       0.58      0.56      0.53      9369
+weighted avg       0.58      0.59      0.55      9369

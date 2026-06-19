@@ -1,0 +1,9 @@
+--- TabNet Performance for PG ---
+              precision    recall  f1-score   support
+
+        Down       0.63      1.00      0.77      6094
+          Up       0.62      0.00      0.01      3584
+
+    accuracy                           0.63      9678
+   macro avg       0.63      0.50      0.39      9678
+weighted avg       0.63      0.63      0.49      9678

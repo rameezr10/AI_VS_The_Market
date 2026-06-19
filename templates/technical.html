@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block header_title %}Technical Indicators & Sentiment Analysis{% endblock %}
+
+{% block content %}
+<div class="h-full flex flex-col">
+    <div class="mb-4 flex justify-between items-center">
+        <p class="text-gray-400 text-sm">
+            Interactive Technical Dashboard. Explore 1-minute OHLCV data overlaid with Kalman filtering, MACD, RSI, and News Sentiment scores.
+        </p>
+        <button id="refresh-btn" class="bg-tealHighlight hover:bg-teal-500 text-white px-4 py-1.5 rounded text-sm font-medium transition-colors">
+            Refresh Dashboard
+        </button>
+    </div>
+
+    <!-- Iframe Container -->
+    <div class="flex-1 bg-cardBg border border-borderGrey rounded-lg overflow-hidden flex flex-col relative">
+        <!-- Loading overlay -->
+        <div id="iframe-loader" class="absolute inset-0 z-10 flex items-center justify-center bg-cardBg">
+            <div class="flex flex-col items-center">
+                <svg class="animate-spin h-8 w-8 text-tealHighlight mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <p class="text-sm text-gray-400">Loading Technical Interactive Plot...</p>
+            </div>
+        </div>
+
+        <iframe id="tech-iframe" class="w-full h-full border-none" src=""></iframe>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const tickerSelect = document.getElementById('ticker-select');
+    const iframe = document.getElementById('tech-iframe');
+    const loader = document.getElementById('iframe-loader');
+    const refreshBtn = document.getElementById('refresh-btn');
+
+    function loadDashboard() {
+        const symbol = tickerSelect.value;
+        // Show loader while iframe is fetching the new source
+        loader.classList.remove('hidden');
+        
+        // Use a timestamp to prevent the browser from serving a cached version
+        const timestamp = new Date().getTime();
+        
+        // Update the iframe source to point to the standalone HTML file in the backend
+        iframe.src = `/visualizations/Technical%20Indicators/${symbol}_technical_dashboard.html?t=${timestamp}`;
+    }
+
+    // Hide loader once the iframe finishes loading
+    iframe.onload = function() {
+        loader.classList.add('hidden');
+    };
+
+    // Event listener for dropdown changes and refresh button
+    tickerSelect.addEventListener('change', loadDashboard);
+    refreshBtn.addEventListener('click', loadDashboard);
+    
+    // Initial load
+    document.addEventListener('DOMContentLoaded', loadDashboard);
+</script>
+{% endblock %}

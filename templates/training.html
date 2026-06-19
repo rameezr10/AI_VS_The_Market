@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% block header_title %}Model Training Lab{% endblock %}
+{% block header_controls %}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    
+    <div class="mb-8">
+        <h2 class="text-xl font-bold text-white mb-2">Deep Learning Engine</h2>
+        <p class="text-gray-400 text-sm">
+            Trigger background model training using the latest dataset available for each ticker.
+            You can choose the architecture (TFT, LSTM, GRU, TabNet, CapsNet-LSTM) and the feature mode (Normal uses all technical/news indicators, Baseline uses price-only).
+            Artifacts and checkpoints will be saved with auto-incrementing versions.
+        </p>
+    </div>
+
+    <!-- Alert for general messages -->
+    <div id="general-alert" class="hidden mb-6 bg-blue-900/30 border border-blue-500/50 text-blue-200 px-4 py-3 rounded">
+        <p id="general-alert-text" class="text-sm"></p>
+    </div>
+
+    <div class="bg-cardBg border border-borderGrey rounded-lg overflow-hidden">
+        <div class="px-6 py-4 border-b border-borderGrey bg-[#1f1f1f] flex justify-between items-center">
+            <h3 class="text-md font-medium text-white tracking-wide">Training Queue</h3>
+            
+            <div class="flex items-center space-x-4">
+                <select id="global-model-select" class="bg-darkBg border border-borderGrey text-white text-sm rounded px-3 py-1.5 focus:outline-none">
+                    <option value="TFT">TFT</option>
+                    <option value="LSTM">LSTM</option>
+                    <option value="GRU">GRU</option>
+                    <option value="TabNet">TabNet</option>
+                    <option value="CapsNetLSTM">CapsNet-LSTM</option>
+                </select>
+                <select id="global-mode-select" class="bg-darkBg border border-borderGrey text-white text-sm rounded px-3 py-1.5 focus:outline-none">
+                    <option value="Normal">Normal</option>
+                    <option value="Baseline">Baseline</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="divide-y divide-borderGrey">
+            {% for ticker in tickers %}
+            <div class="p-4 flex items-center justify-between hover:bg-white/5 transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-darkBg border border-borderGrey w-12 h-12 rounded flex items-center justify-center">
+                        <span class="font-mono font-bold text-tealHighlight">{{ ticker }}</span>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-medium">Training Status</h4>
+                        <p id="status-text-{{ ticker }}" class="text-xs text-gray-500 font-mono mt-1">Idle - Ready to train.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Spinner (hidden by default) -->
+                    <div id="spinner-{{ ticker }}" class="hidden">
+                        <svg class="animate-spin h-5 w-5 text-tealHighlight" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </div>
+                    
+                    <button onclick="triggerTraining('{{ ticker }}')" id="btn-{{ ticker }}" class="bg-tealHighlight hover:bg-teal-500 text-white px-4 py-2 rounded text-sm font-medium transition-colors focus:outline-none">
+                        Start Training
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Store active polling intervals
+    const pollingIntervals = {};
+
+    function showAlert(message, isError=false) {
+        const alertBox = document.getElementById('general-alert');
+        const alertText = document.getElementById('general-alert-text');
+        
+        alertText.innerText = message;
+        alertBox.classList.remove('hidden', 'bg-blue-900/30', 'border-blue-500/50', 'text-blue-200', 'bg-red-900/30', 'border-red-500/50', 'text-red-200');
+        
+        if (isError) {
+            alertBox.classList.add('bg-red-900/30', 'border-red-500/50', 'text-red-200');
+        } else {
+            alertBox.classList.add('bg-blue-900/30', 'border-blue-500/50', 'text-blue-200');
+        }
+    }
+
+    function setUIState(symbol, status, message) {
+        const btn = document.getElementById(`btn-${symbol}`);
+        const spinner = document.getElementById(`spinner-${symbol}`);
+        const statusText = document.getElementById(`status-text-${symbol}`);
+        
+        statusText.innerText = message;
+        
+        if (status === 'training' || status === 'collecting') {
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            spinner.classList.remove('hidden');
+            statusText.classList.remove('text-gray-500', 'text-green-400', 'text-red-400');
+            statusText.classList.add('text-tealHighlight');
+        } else if (status === 'idle') {
+            btn.disabled = false;
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            spinner.classList.add('hidden');
+            statusText.classList.remove('text-gray-500', 'text-tealHighlight', 'text-red-400');
+            statusText.classList.add('text-green-400');
+        } else if (status === 'error') {
+            btn.disabled = false;
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            spinner.classList.add('hidden');
+            statusText.classList.remove('text-gray-500', 'text-tealHighlight', 'text-green-400');
+            statusText.classList.add('text-red-400');
+        }
+    }
+
+    async function pollStatus(symbol) {
+        try {
+            const response = await fetch(`/api/status/${symbol}`);
+            const data = await response.json();
+            
+            setUIState(symbol, data.status, data.message);
+            
+            // Stop polling if no longer busy
+            if (data.status !== 'collecting' && data.status !== 'training') {
+                if (pollingIntervals[symbol]) {
+                    clearInterval(pollingIntervals[symbol]);
+                    delete pollingIntervals[symbol];
+                }
+            }
+        } catch (error) {
+            console.error("Polling error for", symbol, error);
+        }
+    }
+
+    async function triggerTraining(symbol) {
+        const model = document.getElementById('global-model-select').value;
+        const mode = document.getElementById('global-mode-select').value;
+        
+        try {
+            const response = await fetch(`/api/train/${symbol}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model_type: model,
+                    mode: mode
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                showAlert(`Successfully queued ${model} (${mode}) training for ${symbol}.`);
+                setUIState(symbol, 'training', `Started training ${model} in ${mode} mode...`);
+                
+                // Start polling every 2 seconds
+                if (!pollingIntervals[symbol]) {
+                    pollingIntervals[symbol] = setInterval(() => pollStatus(symbol), 2000);
+                }
+            } else {
+                showAlert(`Failed to queue training for ${symbol}: ${data.error}`, true);
+            }
+        } catch (error) {
+            showAlert(`Network error: ${error}`, true);
+        }
+    }
+    
+    // Initial poll for all tickers to catch up on any active background tasks
+    document.addEventListener('DOMContentLoaded', () => {
+        {% for ticker in tickers %}
+            pollStatus('{{ ticker }}');
+        {% endfor %}
+    });
+</script>
+{% endblock %}

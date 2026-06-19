@@ -1,0 +1,11 @@
+--- TabNet Baseline Performance for HD ---
+Test Accuracy: 50.16%
+
+               precision    recall  f1-score   support
+
+Down/Flat (0)       0.50      1.00      0.67      4819
+       Up (1)       0.00      0.00      0.00      4789
+
+     accuracy                           0.50      9608
+    macro avg       0.25      0.50      0.33      9608
+ weighted avg       0.25      0.50      0.34      9608

@@ -1,0 +1,9 @@
+--- Final Statistical Performance for JPM (10% Test Set) ---
+              precision    recall  f1-score   support
+
+        Down       0.86      0.88      0.87      4963
+          Up       0.87      0.85      0.86      4769
+
+    accuracy                           0.86      9732
+   macro avg       0.86      0.86      0.86      9732
+weighted avg       0.86      0.86      0.86      9732

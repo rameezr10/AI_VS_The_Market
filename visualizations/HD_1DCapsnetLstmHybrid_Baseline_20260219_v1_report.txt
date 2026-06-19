@@ -1,0 +1,11 @@
+--- CAPSNET-LSTM BASELINE STATISTICAL PERFORMANCE for HD ---
+Test Accuracy: 50.24%
+
+              precision    recall  f1-score   support
+
+   Down/Flat       0.50      0.98      0.66      4819
+          Up       0.52      0.02      0.04      4788
+
+    accuracy                           0.50      9607
+   macro avg       0.51      0.50      0.35      9607
+weighted avg       0.51      0.50      0.35      9607

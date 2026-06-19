@@ -1,0 +1,9 @@
+--- TabNet Performance for MSFT ---
+              precision    recall  f1-score   support
+
+        Down       0.58      1.00      0.73      5279
+          Up       0.50      0.00      0.00      3808
+
+    accuracy                           0.58      9087
+   macro avg       0.54      0.50      0.37      9087
+weighted avg       0.55      0.58      0.43      9087

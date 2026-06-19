@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block header_title %}Model Results Dashboard{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <div class="flex space-x-2 items-center">
+        <label class="text-sm text-gray-400">Model:</label>
+        <select id="model-select" class="bg-cardBg border border-borderGrey text-white text-sm rounded px-3 py-1.5 focus:outline-none">
+            <option value="TFT">TFT</option>
+            <option value="lstm">LSTM</option>
+            <option value="gru">GRU</option>
+            <option value="tabnet">TabNet</option>
+            <option value="1DCapsnetLstmHybrid">CapsNet-LSTM</option>
+        </select>
+        
+        <label class="text-sm text-gray-400 ml-4">Mode:</label>
+        <select id="mode-select" class="bg-cardBg border border-borderGrey text-white text-sm rounded px-3 py-1.5 focus:outline-none">
+            <option value="Normal">Full Features</option>
+            <option value="Baseline">Price Only (Baseline)</option>
+        </select>
+    </div>
+    
+    <button id="refresh-btn" class="bg-tealHighlight hover:bg-teal-500 text-white px-4 py-1.5 rounded text-sm font-medium transition-colors">
+        Fetch Results
+    </button>
+</div>
+
+<!-- Warning Alert if no data found -->
+<div id="error-alert" class="hidden mb-6 bg-red-900/30 border border-red-500/50 text-red-200 px-4 py-3 rounded">
+    <p id="error-text" class="text-sm"></p>
+</div>
+
+<!-- Layout for Visuals -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+    <!-- Left Column: Images -->
+    <div class="space-y-6">
+        <!-- Equity Curve -->
+        <div class="bg-cardBg border border-borderGrey rounded-lg overflow-hidden">
+            <div class="px-4 py-3 border-b border-borderGrey flex justify-between items-center">
+                <h2 class="text-sm font-medium text-gray-300 uppercase tracking-wider">Equity Curve Simulation</h2>
+                <span class="text-xs bg-darkBg border border-borderGrey px-2 py-0.5 rounded text-gray-500">Test Set</span>
+            </div>
+            <div class="p-4 flex justify-center items-center bg-darkBg min-h-[300px]">
+                <img id="equity-img" src="" alt="Equity Curve" class="max-w-full h-auto rounded hidden">
+                <div id="equity-skeleton" class="animate-pulse flex space-x-4 w-full h-[300px] bg-borderGrey/30 rounded"></div>
+            </div>
+        </div>
+
+        <!-- Confusion Matrix -->
+        <div class="bg-cardBg border border-borderGrey rounded-lg overflow-hidden">
+            <div class="px-4 py-3 border-b border-borderGrey flex justify-between items-center">
+                <h2 class="text-sm font-medium text-gray-300 uppercase tracking-wider">Confusion Matrix</h2>
+                <span class="text-xs bg-darkBg border border-borderGrey px-2 py-0.5 rounded text-gray-500">Test Set</span>
+            </div>
+            <div class="p-4 flex justify-center items-center bg-darkBg min-h-[300px]">
+                <img id="cm-img" src="" alt="Confusion Matrix" class="max-w-full h-auto rounded hidden">
+                <div id="cm-skeleton" class="animate-pulse flex space-x-4 w-full h-[300px] bg-borderGrey/30 rounded"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Text Report -->
+    <div class="h-full">
+        <div class="bg-cardBg border border-borderGrey rounded-lg flex flex-col h-full overflow-hidden">
+            <div class="px-4 py-3 border-b border-borderGrey shrink-0">
+                <h2 class="text-sm font-medium text-gray-300 uppercase tracking-wider">Classification Report</h2>
+            </div>
+            <div class="p-4 flex-1 bg-[#050505] overflow-x-auto">
+                <pre id="report-text" class="text-xs md:text-sm text-green-400 font-mono hidden"></pre>
+                <div id="report-skeleton" class="animate-pulse flex flex-col space-y-3 w-full h-full">
+                    <div class="h-4 bg-borderGrey/30 rounded w-3/4"></div>
+                    <div class="h-4 bg-borderGrey/30 rounded w-1/2"></div>
+                    <div class="h-4 bg-borderGrey/30 rounded w-5/6"></div>
+                    <div class="h-4 bg-borderGrey/30 rounded w-full"></div>
+                    <div class="h-4 bg-borderGrey/30 rounded w-2/3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Grab DOM Elements
+    const tickerSelect = document.getElementById('ticker-select');
+    const modelSelect = document.getElementById('model-select');
+    const modeSelect = document.getElementById('mode-select');
+    const refreshBtn = document.getElementById('refresh-btn');
+    
+    const equityImg = document.getElementById('equity-img');
+    const cmImg = document.getElementById('cm-img');
+    const reportText = document.getElementById('report-text');
+    
+    const errorAlert = document.getElementById('error-alert');
+    const errorText = document.getElementById('error-text');
+    
+    const equitySkeleton = document.getElementById('equity-skeleton');
+    const cmSkeleton = document.getElementById('cm-skeleton');
+    const reportSkeleton = document.getElementById('report-skeleton');
+
+    // UI State Manager
+    function setLoading(isLoading) {
+        if (isLoading) {
+            equityImg.classList.add('hidden');
+            cmImg.classList.add('hidden');
+            reportText.classList.add('hidden');
+            errorAlert.classList.add('hidden');
+            
+            equitySkeleton.classList.remove('hidden');
+            cmSkeleton.classList.remove('hidden');
+            reportSkeleton.classList.remove('hidden');
+        } else {
+            equitySkeleton.classList.add('hidden');
+            cmSkeleton.classList.add('hidden');
+            reportSkeleton.classList.add('hidden');
+        }
+    }
+
+    // Dynamic Fetch Logic bridging to the Phase 2 API
+    async function fetchData() {
+        setLoading(true);
+        const symbol = tickerSelect.value;
+        const model = modelSelect.value;
+        const mode = modeSelect.value;
+        
+        try {
+            const response = await fetch(`/api/visualize/${symbol}/${model}/${mode}`);
+            const data = await response.json();
+            
+            setLoading(false);
+            
+            // Check for missing data or backend errors
+            if (data.error) {
+                errorText.innerText = data.error;
+                errorAlert.classList.remove('hidden');
+            } else if (data.type === 'images') {
+                // Success! Inject paths into image sources
+                // Note: The API returns something like "MSFT_TFT_Normal_20260219_v1_equity.png"
+                // The Flask route serves it from /visualizations/...
+                equityImg.src = `/visualizations/${data.equity}`;
+                cmImg.src = `/visualizations/${data.cm}`;
+                reportText.innerText = data.report || "No text report found.";
+                
+                // Show elements
+                equityImg.classList.remove('hidden');
+                cmImg.classList.remove('hidden');
+                reportText.classList.remove('hidden');
+            } else {
+                errorText.innerText = "Unexpected data format received from server.";
+                errorAlert.classList.remove('hidden');
+            }
+            
+        } catch (error) {
+            setLoading(false);
+            errorText.innerText = "Network error while fetching data: " + error;
+            errorAlert.classList.remove('hidden');
+        }
+    }
+
+    // Event Listeners for immediate updates on selection change
+    tickerSelect.addEventListener('change', fetchData);
+    modelSelect.addEventListener('change', fetchData);
+    modeSelect.addEventListener('change', fetchData);
+    refreshBtn.addEventListener('click', fetchData);
+    
+    // Initial fetch on page load
+    document.addEventListener('DOMContentLoaded', fetchData);
+</script>
+{% endblock %}

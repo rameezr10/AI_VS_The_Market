@@ -1,0 +1,9 @@
+--- Final Statistical Performance for HD (10% Test Set) ---
+              precision    recall  f1-score   support
+
+        Down       0.84      0.83      0.84      4836
+          Up       0.83      0.83      0.83      4710
+
+    accuracy                           0.83      9546
+   macro avg       0.83      0.83      0.83      9546
+weighted avg       0.83      0.83      0.83      9546

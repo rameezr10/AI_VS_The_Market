@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI vs The Market Terminal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0a0a0a',
+                        cardBg: '#1a1a1a',
+                        borderGrey: '#262626',
+                        tealHighlight: '#0d9488',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #404040; 
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-gray-200 font-sans h-screen flex overflow-hidden uppercase tracking-wide">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-cardBg border-r border-borderGrey flex flex-col justify-between h-full shrink-0">
+        <div>
+            <a href="/" class="h-16 flex items-center px-6 border-b border-borderGrey hover:bg-white/5 transition-colors block">
+                <span class="text-xl font-bold tracking-wider text-white">AI VS THE MARKET</span>
+            </a>
+            <nav class="p-4 space-y-2">
+                <a href="/technical" class="block px-4 py-2 rounded text-gray-400 hover:text-white hover:bg-borderGrey/50 transition-colors">
+                    Data Visualizations
+                </a>
+                <a href="/dashboard" class="block px-4 py-2 rounded text-gray-400 hover:text-white hover:bg-borderGrey/50 transition-colors">
+                    Model Results
+                </a>
+                <a href="/dataset" class="block px-4 py-2 rounded text-gray-400 hover:text-white hover:bg-borderGrey/50 transition-colors">
+                    Raw Dataset
+                </a>
+                <a href="/collection" class="block px-4 py-2 rounded text-gray-400 hover:text-white hover:bg-borderGrey/50 transition-colors">
+                    Data Collection
+                </a>
+                <a href="/training" class="block px-4 py-2 rounded text-gray-400 hover:text-white hover:bg-borderGrey/50 transition-colors">
+                    Model Training
+                </a>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-borderGrey text-xs text-gray-500">
+            System Status: <span class="text-green-500">Online</span>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full overflow-hidden">
+        <!-- Header -->
+        <header class="h-16 bg-cardBg border-b border-borderGrey flex items-center justify-between px-6 shrink-0">
+            <h1 class="text-lg font-medium">{% block header_title %}Overview{% endblock %}</h1>
+            <div class="flex items-center space-x-4">
+                {% block header_controls %}
+                <div class="flex items-center bg-darkBg border border-borderGrey rounded px-3 py-1.5">
+                    <img id="ticker-logo" src="" alt="Logo" class="w-6 h-6 mr-3 rounded-full object-contain hidden bg-white">
+                    <label for="ticker-select" class="text-sm text-gray-400 mr-2">TICKER:</label>
+                    <select id="ticker-select" class="bg-transparent text-white font-mono font-bold focus:outline-none appearance-none cursor-pointer">
+                        {% for ticker in tickers %}
+                            <option value="{{ ticker }}" class="bg-darkBg">{{ ticker }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endblock %}
+            </div>
+        </header>
+
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto p-6 relative">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Global Ticker State Manager -->
+    <script>
+        (function() {
+            const tickerSelect = document.getElementById('ticker-select');
+            const tickerLogo = document.getElementById('ticker-logo');
+            
+            const tickerDomains = {
+                'MSFT': 'microsoft.com',
+                'COST': 'costco.com',
+                'HD': 'homedepot.com',
+                'JNJ': 'jnj.com',
+                'JPM': 'jpmorganchase.com',
+                'LLY': 'lilly.com',
+                'MA': 'mastercard.us',
+                'META': 'meta.com',
+                'PG': 'pg.com',
+                'UNH': 'uhg.com',
+                'V': 'visa.com',
+                'WMT': 'walmart.com',
+                'XOM': 'exxonmobil.com'
+            };
+
+            function updateLogo(ticker) {
+                if (tickerLogo && tickerDomains[ticker]) {
+                    // Use Google Favicon API as a reliable fallback
+                    tickerLogo.src = `https://s2.googleusercontent.com/s2/favicons?domain=${tickerDomains[ticker]}&sz=128`;
+                    tickerLogo.classList.remove('hidden');
+                }
+            }
+
+            if (tickerSelect) {
+                // 1. On load, if we have a saved ticker, set the dropdown to it immediately.
+                const savedTicker = localStorage.getItem('globalTicker');
+                if (savedTicker) {
+                    const options = Array.from(tickerSelect.options).map(opt => opt.value);
+                    if (options.includes(savedTicker)) {
+                        tickerSelect.value = savedTicker;
+                    }
+                }
+                
+                // Initialize Logo
+                updateLogo(tickerSelect.value);
+                
+                // 2. Listen for changes and update the memory globally.
+                tickerSelect.addEventListener('change', function() {
+                    localStorage.setItem('globalTicker', this.value);
+                    updateLogo(this.value);
+                });
+            }
+        })();
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

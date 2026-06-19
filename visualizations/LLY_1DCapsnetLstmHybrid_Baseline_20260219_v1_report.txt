@@ -1,0 +1,11 @@
+--- CAPSNET-LSTM BASELINE STATISTICAL PERFORMANCE for LLY ---
+Test Accuracy: 52.20%
+
+              precision    recall  f1-score   support
+
+   Down/Flat       0.52      1.00      0.69      5073
+          Up       0.50      0.00      0.00      4646
+
+    accuracy                           0.52      9719
+   macro avg       0.51      0.50      0.34      9719
+weighted avg       0.51      0.52      0.36      9719

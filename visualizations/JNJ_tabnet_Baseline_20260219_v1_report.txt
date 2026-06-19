@@ -1,0 +1,11 @@
+--- TabNet Baseline Performance for JNJ ---
+Test Accuracy: 50.86%
+
+               precision    recall  f1-score   support
+
+Down/Flat (0)       0.51      0.99      0.67      4967
+       Up (1)       0.47      0.01      0.01      4793
+
+     accuracy                           0.51      9760
+    macro avg       0.49      0.50      0.34      9760
+ weighted avg       0.49      0.51      0.35      9760

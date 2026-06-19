@@ -1,0 +1,11 @@
+--- CAPSNET-LSTM BASELINE STATISTICAL PERFORMANCE for JPM ---
+Test Accuracy: 51.35%
+
+              precision    recall  f1-score   support
+
+   Down/Flat       0.51      1.00      0.68      5029
+          Up       0.00      0.00      0.00      4765
+
+    accuracy                           0.51      9794
+   macro avg       0.26      0.50      0.34      9794
+weighted avg       0.26      0.51      0.35      9794

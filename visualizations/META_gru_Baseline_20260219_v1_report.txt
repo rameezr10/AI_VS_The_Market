@@ -1,0 +1,9 @@
+--- GRU Baseline Performance for META ---
+              precision    recall  f1-score   support
+
+        Down       0.51      1.00      0.67      4521
+          Up       0.00      0.00      0.00      4385
+
+    accuracy                           0.51      8906
+   macro avg       0.25      0.50      0.34      8906
+weighted avg       0.26      0.51      0.34      8906

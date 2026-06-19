@@ -1,0 +1,11 @@
+--- TabNet Baseline Performance for COST ---
+Test Accuracy: 50.59%
+
+               precision    recall  f1-score   support
+
+Down/Flat (0)       0.51      1.00      0.67      4745
+       Up (1)       0.37      0.00      0.00      4624
+
+     accuracy                           0.51      9369
+    macro avg       0.44      0.50      0.34      9369
+ weighted avg       0.44      0.51      0.34      9369

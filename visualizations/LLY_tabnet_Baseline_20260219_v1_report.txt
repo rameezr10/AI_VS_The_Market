@@ -1,0 +1,11 @@
+--- TabNet Baseline Performance for LLY ---
+Test Accuracy: 49.59%
+
+               precision    recall  f1-score   support
+
+Down/Flat (0)       0.52      0.41      0.46      5074
+       Up (1)       0.48      0.59      0.53      4646
+
+     accuracy                           0.50      9720
+    macro avg       0.50      0.50      0.49      9720
+ weighted avg       0.50      0.50      0.49      9720

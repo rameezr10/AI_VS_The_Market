@@ -1,0 +1,11 @@
+--- Final Statistical Performance for XOM (10% Test Set) ---
+Test Accuracy: 50.72%
+
+               precision    recall  f1-score   support
+
+Down/Flat (0)       0.51      0.93      0.66      4924
+       Up (1)       0.51      0.07      0.13      4804
+
+     accuracy                           0.51      9728
+    macro avg       0.51      0.50      0.39      9728
+ weighted avg       0.51      0.51      0.40      9728

@@ -1,0 +1,11 @@
+--- Final Statistical Performance for MA (10% Test Set) ---
+Test Accuracy: 51.29%
+
+               precision    recall  f1-score   support
+
+Down/Flat (0)       0.52      0.91      0.66      4947
+       Up (1)       0.48      0.09      0.15      4639
+
+     accuracy                           0.51      9586
+    macro avg       0.50      0.50      0.40      9586
+ weighted avg       0.50      0.51      0.41      9586

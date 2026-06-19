@@ -1,0 +1,9 @@
+--- TabNet Performance for XOM ---
+              precision    recall  f1-score   support
+
+        Down       0.62      1.00      0.77      6096
+          Up       0.50      0.00      0.00      3694
+
+    accuracy                           0.62      9790
+   macro avg       0.56      0.50      0.39      9790
+weighted avg       0.58      0.62      0.48      9790

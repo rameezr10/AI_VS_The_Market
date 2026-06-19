@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI vs the Market</title>
+    <style>
+        /* Overall Page Styling */
+        body {
+            background-color: #ffffff;
+            /* White background */
+            color: #0d1b2a;
+            /* Bluish black text color */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Top Left Logo */
+        .logo-container {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+        }
+
+        .logo-container img {
+            max-width: 150px;
+            /* Adjust this based on your actual logo size */
+            height: auto;
+        }
+
+        /* Bottom Left Supervisor */
+        .supervisor-container {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            font-size: 1.2rem;
+            text-align: left;
+        }
+
+        .supervisor-container span {
+            font-weight: bold;
+            color: #1d3557;
+            /* Slightly lighter bluish-black accent */
+        }
+
+        /* Center Content Wrapper */
+        .content-container {
+            max-width: 900px;
+            padding: 20px;
+            margin-top: -50px;
+            /* Adjusts alignment to be "middleish topish" */
+        }
+
+        /* Project Title */
+        .project-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            color: #0d1b2a;
+        }
+
+        /* Team Text */
+        .team-section {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            line-height: 1.8;
+            /* Increased to give space between names */
+        }
+
+        .team-section .by-text {
+            font-weight: bold;
+            color: #1d3557;
+            font-size: 1.6rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* Button Styling */
+        .button-container {
+            margin-top: 50px;
+        }
+
+        .redirect-btn {
+            background-color: #1d3557;
+            /* Dark bluish button to contrast white background */
+            color: #ffffff;
+            text-decoration: none;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            border: 2px solid #1d3557;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+            display: inline-block;
+        }
+
+        /* Button Hover Effects */
+        .redirect-btn:hover {
+            background-color: #457b9d;
+            /* Lighter blue on hover */
+            border-color: #457b9d;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="logo-container">
+        <img src="fast-logo.png" alt="Project Logo">
+    </div>
+
+    <div class="content-container">
+
+        <div class="project-title">
+            AI vs the Market: Predicting Intraday Stock Movements with Machine Learning
+        </div>
+
+        <div class="team-section">
+            <span class="by-text">By</span>
+            Bassam Khalid<br>
+            Abdur Rab Mustafa<br>
+            Rameez Rehan
+        </div>
+
+        <div class="button-container">
+            <a href="http://127.0.0.1:5000/" class="redirect-btn">Go to Main Website</a>
+        </div>
+
+    </div>
+
+    <div class="supervisor-container">
+        <span>Supervisor:</span><br>
+        Mr. Danyal Farhat
+    </div>
+
+</body>
+
+</html>

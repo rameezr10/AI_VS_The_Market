@@ -1,0 +1,9 @@
+--- GRU Baseline Performance for WMT ---
+              precision    recall  f1-score   support
+
+        Down       0.52      1.00      0.68      5021
+          Up       0.00      0.00      0.00      4702
+
+    accuracy                           0.52      9723
+   macro avg       0.26      0.50      0.34      9723
+weighted avg       0.27      0.52      0.35      9723

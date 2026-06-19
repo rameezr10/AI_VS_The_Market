@@ -1,0 +1,9 @@
+--- Final Statistical Performance for MA (Test Set) ---
+              precision    recall  f1-score   support
+
+        Down       0.63      0.71      0.67      4979
+          Up       0.64      0.56      0.60      4667
+
+    accuracy                           0.63      9646
+   macro avg       0.64      0.63      0.63      9646
+weighted avg       0.64      0.63      0.63      9646

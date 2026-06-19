@@ -1,0 +1,9 @@
+--- GRU Baseline Performance for MSFT ---
+              precision    recall  f1-score   support
+
+        Down       0.50      0.70      0.58      4565
+          Up       0.49      0.29      0.37      4501
+
+    accuracy                           0.50      9066
+   macro avg       0.49      0.50      0.47      9066
+weighted avg       0.49      0.50      0.48      9066

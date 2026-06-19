@@ -1,0 +1,11 @@
+--- Final Statistical Performance for JNJ (10% Test Set) ---
+Test Accuracy: 50.89%
+
+               precision    recall  f1-score   support
+
+Down/Flat (0)       0.51      0.99      0.67      4942
+       Up (1)       0.46      0.01      0.01      4757
+
+     accuracy                           0.51      9699
+    macro avg       0.48      0.50      0.34      9699
+ weighted avg       0.48      0.51      0.35      9699
